@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file("path/to/screenstop-release-key.keystore")
+            storePassword "your-store-password"
+            keyAlias "screenstop-key"
+            keyPassword "your-key-password"
+        }
+    }
     compileSdkVersion 31
     defaultConfig {
         applicationId "com.example.screenstopapp"
