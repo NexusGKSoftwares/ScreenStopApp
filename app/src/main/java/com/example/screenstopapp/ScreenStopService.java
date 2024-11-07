@@ -1,45 +1,54 @@
+package com.example.screenstopapp;
+
 import android.accessibilityservice.AccessibilityService;
-import android.view.accessibility.AccessibilityEvent;
+import android.content.SharedPreferences;
+import android.graphics.PixelFormat;
 import android.view.WindowManager;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.FrameLayout;
 
 public class ScreenStopService extends AccessibilityService {
 
-    @Override
-    public void onAccessibilityEvent(AccessibilityEvent event) {
-        // No need to handle specific accessibility events
-    }
+    private WindowManager windowManager;
+    private FrameLayout overlay;
+    private SharedPreferences sharedPreferences;
 
     @Override
-    public void onInterrupt() {
-        // Handle service interruption
-    }
-
-    @Override
-    protected void onServiceConnected() {
+    public void onServiceConnected() {
         super.onServiceConnected();
 
-        // Set up overlay to cover the bottom 20-22% of the screen
-        WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        FrameLayout overlay = new FrameLayout(this);
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("ScreenStopPrefs", MODE_PRIVATE);
+        int savedHeightPercentage = 20 + sharedPreferences.getInt("HeightPercentage", 0);
 
-        // Configure layout parameters to position the overlay
+        // Setup overlay
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        overlay = new FrameLayout(this);
+        
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
-            calculateOverlayHeight(), // Method to calculate 20-22% height
+            (int) (getResources().getDisplayMetrics().heightPixels * (savedHeightPercentage / 100.0)),
             WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         );
 
-        // Add the overlay to the window
         windowManager.addView(overlay, params);
     }
 
-    private int calculateOverlayHeight() {
-        // Logic to calculate the height for 20-22% of the screen
-        // Use screen height and the percentage set by the slider
-        return (int) (getResources().getDisplayMetrics().heightPixels * 0.20);
+    @Override
+    public void onAccessibilityEvent(AccessibilityEvent event) {
+        // Not needed for this app
+    }
+
+    @Override
+    public void onInterrupt() {}
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (overlay != null) {
+            windowManager.removeView(overlay);
+        }
     }
 }
-
