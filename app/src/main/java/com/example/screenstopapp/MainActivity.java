@@ -1,3 +1,4 @@
+import android.content.SharedPreferences;
 SeekBar heightSlider = findViewById(R.id.height_slider);
 Button saveButton = findViewById(R.id.save_button);
 
@@ -14,8 +15,16 @@ heightSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) { }
 });
+// Inside your MainActivity class
+SharedPreferences sharedPreferences = getSharedPreferences("ScreenStopPrefs", MODE_PRIVATE);
+Button saveButton = findViewById(R.id.save_button);
 
 saveButton.setOnClickListener(v -> {
-    // Save the setting and apply screen lock logic
-});
+    int sliderValue = heightSlider.getProgress();
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putInt("HeightPercentage", sliderValue);
+    editor.apply();
 
+    // Apply the screen overlay change
+    // Call a method to update the ScreenStopService with the new height
+});
