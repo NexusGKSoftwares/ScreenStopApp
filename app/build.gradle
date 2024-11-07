@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file("path/to/screenstop-release-key.keystore")
-            storePassword "your-store-password"
+            storeFile file("screenstop-release-key.keystore")
+            storePassword "14241gkb"
             keyAlias "screenstop-key"
-            keyPassword "your-key-password"
+            keyPassword "14241gkb"
         }
     }
     compileSdkVersion 31
