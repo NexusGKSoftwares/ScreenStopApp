@@ -1,4 +1,4 @@
-package com.example.screenstopapp;
+package main.java.com.example.screenstopapp;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.SharedPreferences;

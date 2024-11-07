@@ -1,4 +1,4 @@
-package com.example.screenstopapp;
+package main.java.com.example.screenstopapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
