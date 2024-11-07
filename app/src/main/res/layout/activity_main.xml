@@ -1,19 +1,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/instruction_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adjust the height of the disabled screen area:"
+        android:textSize="16sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
 
     <SeekBar
         android:id="@+id/height_slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:max="20"
-        android:layout_centerInParent="true"/>
+        android:layout_below="@id/instruction_text"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="Save Settings"
         android:layout_below="@id/height_slider"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current height: 20%"
+        android:textSize="14sp"
+        android:layout_below="@id/save_button"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"/>
 </RelativeLayout>
